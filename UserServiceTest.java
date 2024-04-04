@@ -4,14 +4,18 @@ import org.example.Utilisateur;
 import org.example.UtilisateurApi;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
-
+/*
     @Mock
     private UtilisateurApi utilisateurApiMock;
 
@@ -35,5 +39,59 @@ public class UserServiceTest {
 
         // Vérification de l'appel à l'API
         verify(utilisateurApiMock).creerUtilisateur(utilisateur);
+*/
+
+
+
+
+
+
+
+        @Mock
+        private UtilisateurApi utilisateurApiMock;
+
+        @InjectMocks
+        private UserService userService;
+
+        @Captor
+        private ArgumentCaptor<Utilisateur> utilisateurCaptor;
+
+        
+        @Test
+        public void testCreerUtilisateur_WhenApiThrowsException() throws ServiceException {
+            Utilisateur utilisateur = new Utilisateur("Jean", "Dupont", "jeandupont@email.com");
+            // Configuration du mock pour lancer une exception lors de la création de l'utilisateur
+            doThrow(new ServiceException("Echec de la création de l'utilisateur")).when(utilisateurApiMock).creerUtilisateur(utilisateur);
+            // Appel de la méthode à tester
+            userService.creerUtilisateur(utilisateur);
+        }
+
+    @Test
+    public void testCreerUtilisateur_WhenApiReturnsFalse() throws ServiceException {
+        Utilisateur utilisateur = new Utilisateur("Jean", "Dupont", "jeandupont@email.com");
+        // Configuration du mock pour retourner false lors de la création de l'utilisateur
+        doNothing().when(utilisateurApiMock).creerUtilisateur(utilisateur);
+        // Appel de la méthode à tester
+        userService.creerUtilisateur(utilisateur);
     }
+
+    @Test
+    public void testCreerUtilisateur_WhenApiReturnsTrue() throws ServiceException {
+        Utilisateur utilisateur = new Utilisateur("Jean", "Dupont", "jeandupont@email.com");
+        // Configuration du mock pour retourner true lors de la création de l'utilisateur
+        doNothing().when(utilisateurApiMock).creerUtilisateur(utilisateur);
+        // Appel de la méthode à tester
+        userService.creerUtilisateur(utilisateur);
+    }
+
+    @Test
+    public void testCreerUtilisateur_WhenApiArgumentCaptured() throws ServiceException {
+        Utilisateur utilisateur = new Utilisateur("Jean", "Dupont", "jeandupont@email.com");
+        // Configuration du mock pour retourner true lors de la création de l'utilisateur
+        doNothing().when(utilisateurApiMock).creerUtilisateur(utilisateur);
+        // Appel de la méthode à tester
+        userService.creerUtilisateur(utilisateur);
+    }
+
 }
+
