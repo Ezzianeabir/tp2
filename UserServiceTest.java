@@ -15,7 +15,8 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
-/*
+    
+/* exo2
     @Mock
     private UtilisateurApi utilisateurApiMock;
 
@@ -44,7 +45,7 @@ public class UserServiceTest {
 
 
 
-
+//exo3
 
 
         @Mock
